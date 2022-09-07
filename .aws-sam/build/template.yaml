@@ -1,0 +1,24 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: SlackWorkflowCreateGithubIssue
+Parameters:
+  VerificationToken:
+    Type: String
+Resources:
+  SlackWorkflowCreateGithubIssue:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: SlackWorkflowCreateGithubIssue
+      CodeUri: SlackWorkflowCreateGithubIssue
+      Handler: main.handler
+      Runtime: python3.9
+      MemorySize: 2048
+      Timeout: 60
+      FunctionUrlConfig:
+        AuthType: NONE
+      Environment:
+        Variables:
+          verification_token:
+            Ref: VerificationToken
+    Metadata:
+      SamResourceId: SlackWorkflowCreateGithubIssue
