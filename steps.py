@@ -12,7 +12,6 @@ class Step:
             token=os.getenv("slack_bot_token"),
             signing_secret=os.environ.get("slack_signing_secret"),
         )
-        self.step = WorkflowStep.builder("step")
 
     def edit(self, ack, step, configure):
         ack()
