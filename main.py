@@ -1,18 +1,12 @@
-import json
-import os
+import logging
+import steps
 
-def token_validator(token):
-    verification_token = os.getenv('verification_token')
-    return True if token == verification_token else False
+from slack_bolt.adapter.aws_lambda import SlackRequestHandler
 
-def handler(event, _):
-    body = json.loads(event['body'])
-    if token_validator(body['token']):
-        return {
-            "statusCode": 200,
-            "challenge": body['challenge']
-        }
-    else:
-        return {
-            "statusCode": 500
-        }
+SlackRequestHandler.clear_all_log_handlers()
+logging.basicConfig(format="%(asctime)s %(message)s", level=logging.DEBUG)
+
+def handler(event, context):
+    app = steps.Step().workflows()
+    slack_handler = SlackRequestHandler(app=app)
+    return slack_handler.handle(event, context)

@@ -5,6 +5,14 @@ Description: SlackWorkflowCreateGithubIssue
 Parameters:
   VerificationToken:
     Type: String
+  SlackBotToken:
+    Type: String
+  SlackSigningSecret:
+    Type: String
+  GithubToken:
+    Type: String
+  GithubRepo:
+    Type: String
 
 Resources:
   SlackWorkflowCreateGithubIssue:
@@ -21,3 +29,10 @@ Resources:
       Environment:
         Variables:
           verification_token: !Ref VerificationToken
+          slack_bot_token: !Ref SlackBotToken
+          slack_signing_secret: !Ref SlackSigningSecret
+          github_token: !Ref GithubToken
+          github_repo: !Ref GithubRepo
+      Policies:
+        LambdaInvokePolicy:
+          FunctionName: SlackWorkflowCreateGithubIssue
